@@ -1,0 +1,184 @@
+:root {
+    /* --- PRIMARY --- */
+    --primary: #002b85;
+    --on-primary: #ffffff;
+    --primary-container: #093fb4;
+    --on-primary-container: #a5b7ff;
+    --inverse-primary: #b6c4ff;
+    --primary-fixed: #dce1ff;
+    --primary-fixed-dim: #b6c4ff;
+    --on-primary-fixed: #00164f;
+    --on-primary-fixed-variant: #003bb0;
+
+    /* --- SECONDARY --- */
+    --secondary: #9c4400;
+    --on-secondary: #ffffff;
+    --secondary-container: #fe8438;
+    --on-secondary-container: #652a00;
+    --secondary-fixed: #ffdbca;
+    --secondary-fixed-dim: #ffb68f;
+    --on-secondary-fixed: #331200;
+    --on-secondary-fixed-variant: #773200;
+
+    /* --- TERTIARY --- */
+    --tertiary: #641a00;
+    --on-tertiary: #ffffff;
+    --tertiary-container: #8b2700;
+    --on-tertiary-container: #ffa387;
+    --tertiary-fixed: #ffdbd0;
+    --tertiary-fixed-dim: #ffb59e;
+    --on-tertiary-fixed: #3a0b00;
+    --on-tertiary-fixed-variant: #842500;
+
+    /* --- SURFACE & BACKGROUND --- */
+    --background: #f8f9ff;
+    --on-background: #0b1c30;
+    --surface: #f8f9ff;
+    --on-surface: #0b1c30;
+    --surface-variant: #d3e4fe;
+    --on-surface-variant: #434653;
+    --surface-tint: #2c55c9;
+
+    /* Surface Containers */
+    --surface-bright: #f8f9ff;
+    --surface-dim: #cbdbf5;
+    --surface-container-lowest: #ffffff;
+    --surface-container-low: #eff4ff;
+    --surface-container: #e5eeff;
+    --surface-container-high: #dce9ff;
+    --surface-container-highest: #d3e4fe;
+
+    /* Inverse Surface */
+    --inverse-surface: #213145;
+    --inverse-on-surface: #eaf1ff;
+
+    /* --- ERROR --- */
+    --error: #ba1a1a;
+    --on-error: #ffffff;
+    --error-container: #ffdad6;
+    --on-error-container: #93000a;
+
+    /* --- OUTLINE --- */
+    --outline: #747685;
+    --outline-variant: #c4c5d6;
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+    font-family: 'Inter', sans-serif;
+}
+
+/* ========== Nav Bar ======== */
+.profil {
+    width: 200px;
+    position: relative;
+}
+
+.profil::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    height: 30px;
+    width: 2px;
+    background-color: var(--outline);
+}
+
+.input-grup .form-control {
+    border-radius: 26px;
+}
+
+/* ========== Side Bar ======== */
+.brand-text {
+    color: var(--primary) !important;
+}
+
+.sidebar-menu .nav-item.current,
+.sidebar-menu .nav-item.current .nav-link {
+    background-color: var(--primary-container);
+    border-radius: 15px;
+    color: var(--background) !important;
+}
+
+.sidebar-menu .nav-item.current:hover,
+.sidebar-menu .nav-item.current:hover .nav-link {
+    background-color: var(--primary-container);
+    color: var(--background);
+}
+
+
+.sidebar-menu .nav-item:hover {
+    border-left: 3px solid var(--primary);
+    background-color: var(--background);
+}
+
+/* ========== Pagination Component ======== */
+.pagination-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    /* Mengatur ke tengah halaman, bisa diganti flex-end jika ingin di kanan */
+    padding: 16px 0;
+}
+
+.pagination-item {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--outline-variant, #c4c5d6);
+    border-radius: 8px;
+    background-color: var(--surface-container-lowest, #ffffff);
+    color: var(--on-background, #0b1c30);
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+}
+
+/* Hover effect untuk item biasa (bukan yang aktif) */
+.pagination-item:not(.active):hover {
+    background-color: var(--surface-container-low, #eff4ff);
+    border-color: var(--primary, #002b85);
+    color: var(--primary, #002b85);
+}
+
+/* Style untuk halaman yang sedang aktif (Angka 1 di gambar) */
+.pagination-item.active {
+    background-color: var(--primary-container, #093fb4);
+    /* Menggunakan warna biru cerah sesuai desainmu */
+    border-color: var(--primary-container, #093fb4);
+    color: var(--on-primary, #ffffff);
+    cursor: default;
+}
+
+/* Khusus tombol navigasi panah kiri/kanan */
+.pagination-item.btn-nav {
+    color: var(--on-surface-variant, #434653);
+}
+
+.pagination-item.btn-nav .material-symbols-outlined {
+    font-size: 20px;
+    font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Efek ketika tombol ditekan/klik */
+.pagination-item:active:not(.active) {
+    transform: scale(0.95);
+}
+
+.btn-primary-container {
+    background-color: var(--primary-container);
+    color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.btn-primary-container:hover {
+    background-color: var(--primary-container);
+    opacity: 0.9;
+    color: #ffffff;
+}
