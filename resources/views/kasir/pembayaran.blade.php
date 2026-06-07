@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('kasir.master')
 @section('content')
     <style>
         /* Variabel Warna Sesuai Desain Awal */
@@ -147,7 +147,7 @@
                     <button onclick="goBack()"
                         class="btn bg-white card-shadow d-flex align-items-center justify-content-center"
                         style="width: 48px; height: 48px; border-radius: 12px;" title="Kembali">
-                        <i class="ti ti-chevron-left"></i>                    </button>
+                        <i class="ti ti-chevron-left"></i> </button>
                     <div>
                         <h1 class="text-primary-custom mb-0 h2">Pembayaran</h1>
                     </div>

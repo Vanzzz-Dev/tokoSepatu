@@ -40,6 +40,74 @@
     <!--end::App Main-->
 
   </div>
+  @if(session('store'))
+    <div class="position-fixed top-0 end-0 p-3" style="z-index:9999">
+      <div class="toast show custom-toast border-0 text-white bg-success">
+        <div class="d-flex align-items-center">
+          <div class="toast-body">
+            {{ session('store') }}
+          </div>
+
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast">
+          </button>
+        </div>
+      </div>
+    </div>
+  @endif
+  
+  @if(session('update'))
+    <div class="position-fixed top-0 end-0 p-3" style="z-index:9999">
+      <div class="toast show custom-toast border-0 text-white bg-primary">
+        <div class="d-flex align-items-center">
+          <div class="toast-body">
+            {{ session('update') }}
+          </div>
+
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast">
+          </button>
+        </div>
+      </div>
+    </div>
+  @endif
+  
+  @if(session('delete'))
+    <div class="position-fixed top-0 end-0 p-3" style="z-index:9999">
+      <div class="toast show custom-toast border-0 text-white bg-danger">
+        <div class="d-flex align-items-center">
+          <div class="toast-body">
+            {{ session('delete') }}
+          </div>
+
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast">
+          </button>
+        </div>
+      </div>
+    </div>
+  @endif
+
+
+  <script>
+    setTimeout(() => {
+      document.querySelectorAll('.toast').forEach(toast => {
+        toast.remove();
+      });
+    }, 3000);
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        setTimeout(() => {
+          document.querySelectorAll('.custom-toast').forEach(toast => {
+
+            toast.classList.add('hide');
+
+            setTimeout(() => {
+              toast.remove();
+            }, 3000);
+
+          });
+        }, 100);
+      });
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
     crossorigin="anonymous"></script>
   <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->

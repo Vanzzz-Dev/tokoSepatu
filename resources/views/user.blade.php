@@ -20,7 +20,6 @@
             aria-labelledby="modalAddUserLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" style="max-width: 550px;">
                 <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden bg-white">
-
                     <div class="modal-header border-0 pt-4 px-4 pb-2 d-flex justify-content-between align-items-start">
                         <div>
                             <h5 class="modal-title fw-bold text-dark h4 mb-1" id="modalAddUserLabel"
@@ -31,10 +30,9 @@
                             aria-label="Close"></button>
                     </div>
 
-                    <form action="#" method="POST" id="addUserForm">
+                    <form action="{{ route('users.store') }}" method="POST" id="addUserForm">
                         @csrf
                         <div class="modal-body px-4 py-3">
-
                             <div class="mb-3">
                                 <label for="fullName" class="form-label fw-medium text-dark small mb-1">Full Name</label>
                                 <div class="input-group align-items-center position-relative">
@@ -102,11 +100,36 @@
                                 style="font-size: 14px; background-color: #0d3ba1; border: none;">Simpan</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
 
+        {{-- MODAL GLOBAL CONFIRMATION DELETE --}}
+        <div class="modal fade" id="modalConfirmDelete" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+                <div class="modal-content border-0 rounded-4 shadow-lg bg-white overflow-hidden">
+                    <div class="modal-body p-4 text-center">
+                        <div class="text-danger mb-3">
+                            <i class="ti ti-trash fs-1" style="font-size: 3.5rem !important;"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2" style="font-family: 'Inter', sans-serif;">Hapus User?</h5>
+                        <p class="text-muted small mb-4">Apakah Anda yakin ingin menghapus <span id="deleteUserName"
+                                class="fw-bold text-dark"></span>? Tindakan ini tidak dapat dibatalkan.</p>
+
+                        <div class="d-flex justify-content-center gap-2">
+                            <button type="button" class="btn btn-light fw-medium border-0 px-4 rounded-3 text-secondary"
+                                data-bs-dismiss="modal" style="font-size: 14px;">Batal</button>
+                            <form action="" method="POST" id="formDeleteUser" class="m-0">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger fw-semibold px-4 rounded-3"
+                                    style="font-size: 14px;">Ya, Hapus</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="table-responsive">
             <table class="table align-middle mb-0 text-start table-hover">
@@ -119,37 +142,87 @@
                     </tr>
                 </thead>
                 <tbody class="text-dark">
-                    <tr>
-                        <td class="px-4 py-3">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary fw-bold small"
-                                    style="width: 36px; height: 36px;">MA</div>
-                                <div>
-                                    <p class="fw-semibold m-0" style="font-size: 14px;">Main Admin</p>
-                                    <p class="text-muted small m-0" style="font-size: 12px;">main.admin@email.com</p>
+                    @foreach ($users as $user)
+                        <tr>
+                            <td class="px-4 py-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary fw-bold small"
+                                        style="width: 36px; height: 36px;">
+                                        {{ strtoupper(substr($user->name, 0, 2)) }}
+                                    </div>
+                                    <div>
+                                        <p class="fw-semibold m-0" style="font-size: 14px;">{{ $user->name }}</p>
+                                        <p class="text-muted small m-0" style="font-size: 12px;">{{ $user->email }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3">-</td>
+                            <td class="px-4 py-3">
+                                <span class="badge bg-success bg-opacity-10 text-success fw-semibold">
+                                    {{ $user->role }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-end">
+                                <div class="d-flex justify-content-end gap-1">
+                                    {{-- Button Edit --}}
+                                    <button class="btn btn-light btn-sm border-0 text-primary p-2 d-flex align-items-center"
+                                        data-bs-toggle="modal" data-bs-target="#editModal{{ $user->id }}">
+                                        <i class="ti ti-pencil"></i>
+                                    </button>
+
+                                    {{-- Button Trigger Konfirmasi Delete --}}
+                                    <button type="button"
+                                        class="btn btn-light btn-sm border-0 text-danger p-2 d-flex align-items-center btn-trigger-delete"
+                                        data-id="{{ $user->id }}" data-name="{{ $user->name }}"
+                                        data-url="{{ route('users.destroy', $user->id) }}">
+                                        <i class="ti ti-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        {{-- Modal Edit --}}
+                        <div class="modal fade" id="editModal{{ $user->id }}" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content rounded-4 border-0">
+                                    <form action="{{ route('users.update', $user->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit User</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label>Nama</label>
+                                                <input type="text" name="name" class="form-control" value="{{ $user->name }}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>Email</label>
+                                                <input type="email" name="email" class="form-control"
+                                                    value="{{ $user->email }}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>Role</label>
+                                                <select name="role" class="form-select">
+                                                    <option value="Super Admin" {{ $user->role == 'Super Admin' ? 'selected' : '' }}>Super Admin</option>
+                                                    <option value="Admin" {{ $user->role == 'Admin' ? 'selected' : '' }}>Admin
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>Password Baru</label>
+                                                <input type="password" name="password" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-primary">Update</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                        </td>
-                        <td class="px-4 py-3">
-                            <span class="text-dark text-opacity-75"
-                                style="font-family: 'JetBrains Mono', monospace; font-size: 13px;">+62 812-3456-7890</span>
-                        </td>
-                        <td class="px-4 py-3">
-                            <span class="badge bg-success bg-opacity-10 text-success fw-semibold">Super Admin</span>
-                        </td>
-                        <td class="px-4 py-3 text-end">
-                            <div class="d-flex justify-content-end gap-1">
-                                <button class="btn btn-light btn-sm border-0 text-primary p-2 d-flex align-items-center"
-                                    title="Edit">
-                                    <i class="ti ti-pencil"></i>
-                                </button>
-                                <button class="btn btn-light btn-sm border-0 text-danger p-2 d-flex align-items-center"
-                                    title="Delete">
-                                    <i class="ti ti-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                        </div>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -168,6 +241,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Logika Sembunyikan/Tampilkan Password
             const passwordInput = document.getElementById('userPassword');
             const togglePasswordBtn = document.getElementById('togglePasswordBtn');
             const togglePasswordIcon = document.getElementById('togglePasswordIcon');
@@ -176,8 +250,6 @@
                 togglePasswordBtn.addEventListener('click', function () {
                     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                     passwordInput.setAttribute('type', type);
-
-                    // Ganti icon class Tabler-Icons nya
                     if (type === 'password') {
                         togglePasswordIcon.className = 'ti ti-eye fs-5';
                     } else {
@@ -185,6 +257,27 @@
                     }
                 });
             }
+
+            // LOGIKA DINAMIS MODAL DELETE CONFIRMATION
+            const deleteButtons = document.querySelectorAll('.btn-trigger-delete');
+            const confirmModal = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
+            const deleteForm = document.getElementById('formDeleteUser');
+            const deleteNameSpan = document.getElementById('deleteUserName');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const url = this.getAttribute('data-url');
+                    const name = this.getAttribute('data-name');
+
+                    // Set action form ke route destroy user terpilih
+                    deleteForm.setAttribute('action', url);
+                    // Tampilkan nama user di teks deskripsi modal
+                    deleteNameSpan.textContent = name;
+
+                    // Buka modal konfirmasi hapus
+                    confirmModal.show();
+                });
+            });
         });
     </script>
 @endsection

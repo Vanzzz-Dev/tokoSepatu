@@ -182,3 +182,13 @@ body {
     opacity: 0.9;
     color: #ffffff;
 }
+
+/* alert */
+.custom-toast {
+    opacity: 1;
+    transition: opacity 3s ease;
+}
+
+.custom-toast.hide {
+    opacity: 0;
+}

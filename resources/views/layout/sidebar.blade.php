@@ -28,7 +28,7 @@
                 </li>
             
                 <li class="nav-item {{ request()->routeIs('user') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('user') }}" class="nav-link d-flex align-items-center justify-items-center text-black">
+                    <a href="{{ route('users.index') }}" class="nav-link d-flex align-items-center justify-items-center text-black">
                         <i class="ti ti-user fs-3"></i>
                         <p class="">User</p>
                     </a>

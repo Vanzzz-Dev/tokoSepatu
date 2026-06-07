@@ -224,7 +224,7 @@
                         dashboard.</p>
                 </div>
 
-                <form action="{{ route('dashboard')  }}" method="GET">
+                <form action="{{ route('LoginProses')  }}" method="POST">
                     @csrf
                     <div class="mb-4">
                         <label class="text-on-surface-variant fw-semibold small mb-2 ms-1" for="email">Email
@@ -232,7 +232,7 @@
                         <div class="form-group-custom">
                             <span class="material-symbols-outlined">mail</span>
                             <input class="form-control form-control-custom w-100" id="email"
-                                placeholder="name@gmail.com" required="" type="email" />
+                                placeholder="name@gmail.com" required="" type="email" name="email" />
                         </div>
                     </div>
 
@@ -245,18 +245,9 @@
                         <div class="form-group-custom d-flex align-items-center">
                             <span class="material-symbols-outlined">lock</span>
                             <input class="form-control form-control-custom w-100" id="password" placeholder="Password"
-                                required type="password" />
+                                required type="password" name="password"/>
                             <i id="togglePassword" class="ti ti-eye fs-4"></i>
                         </div>
-                    </div>
-
-                    <div class="form-check d-flex align-items-center gap-2 mb-4 p-0">
-                        <input class="form-check-input m-0 rounded" type="checkbox" id="remember"
-                            style="width: 20px; height: 20px; border-color: var(--border-outline-variant);">
-                        <label class="form-check-label text-on-surface-variant small cursor-pointer ms-1"
-                            for="remember">
-                            Remember this device
-                        </label>
                     </div>
 
                     <button
