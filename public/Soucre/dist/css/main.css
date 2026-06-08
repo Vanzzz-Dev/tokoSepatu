@@ -69,17 +69,61 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+/* ==================== FIX LAYOUT NAVBAR ATAS MOBILE ==================== */
+.app-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 1030 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.app-header .container-fluid {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+}
+
+/* Beri jarak konten utama agar tidak tertutup navbar yang di-fixed */
+.app-main,
+.app-sidebar {
+    margin-top: 60px !important;
+}
+
+@media (max-width: 991.98px) {
+    .app-sidebar {
+        z-index: 1040 !important;
+        /* Sidebar melayang di atas navbar saat dibuka di HP */
+    }
+}
+
+/* ======================================================================= */
+
 /* ========== Nav Bar ======== */
 .profil {
-    width: 200px;
+    /* Lebar 200px DIHAPUS agar lebarnya otomatis pas (fit-content) */
     position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Menghilangkan panah segitiga dropdown bawaan Bootstrap */
+.user-menu .dropdown-toggle::after {
+    display: none !important;
 }
 
 .profil::before {
     content: '';
     position: absolute;
-    left: -6px;
-    height: 30px;
+    left: -12px;
+    /* Disesuaikan jarak garis pembatasnya */
+    height: 25px;
     width: 2px;
     background-color: var(--outline);
 }
@@ -106,7 +150,6 @@ body {
     color: var(--background);
 }
 
-
 .sidebar-menu .nav-item:hover {
     border-left: 3px solid var(--primary);
     background-color: var(--background);
@@ -118,7 +161,6 @@ body {
     gap: 8px;
     align-items: center;
     justify-content: center;
-    /* Mengatur ke tengah halaman, bisa diganti flex-end jika ingin di kanan */
     padding: 16px 0;
 }
 
@@ -140,23 +182,19 @@ body {
     user-select: none;
 }
 
-/* Hover effect untuk item biasa (bukan yang aktif) */
 .pagination-item:not(.active):hover {
     background-color: var(--surface-container-low, #eff4ff);
     border-color: var(--primary, #002b85);
     color: var(--primary, #002b85);
 }
 
-/* Style untuk halaman yang sedang aktif (Angka 1 di gambar) */
 .pagination-item.active {
     background-color: var(--primary-container, #093fb4);
-    /* Menggunakan warna biru cerah sesuai desainmu */
     border-color: var(--primary-container, #093fb4);
     color: var(--on-primary, #ffffff);
     cursor: default;
 }
 
-/* Khusus tombol navigasi panah kiri/kanan */
 .pagination-item.btn-nav {
     color: var(--on-surface-variant, #434653);
 }
@@ -166,7 +204,6 @@ body {
     font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
 }
 
-/* Efek ketika tombol ditekan/klik */
 .pagination-item:active:not(.active) {
     transform: scale(0.95);
 }

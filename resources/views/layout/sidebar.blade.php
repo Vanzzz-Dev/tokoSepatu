@@ -17,59 +17,66 @@
     <div class="sidebar-wrapper">
         <nav class="mt-2">
             <!--begin::Sidebar Menu-->
-            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" aria-label="Main navigation"
-                data-accordion="false" id="navigation">
-            
+            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation"
+                aria-label="Main navigation" data-accordion="false" id="navigation">
+
                 <li class="nav-item {{ request()->routeIs('dashboard') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('dashboard') }}" class="nav-link d-flex align-items-center justify-items-center text-black">
+                    <a href="{{ route('dashboard') }}"
+                        class="nav-link d-flex align-items-center justify-items-center text-black">
                         <i class="ti ti-home fs-3"></i>
                         <p class="">Home</p>
                     </a>
                 </li>
-            
-                <li class="nav-item {{ request()->routeIs('user') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('users.index') }}" class="nav-link d-flex align-items-center justify-items-center text-black">
+
+                <li class="nav-item {{ request()->routeIs('users*') ? 'current' : 'mt-1' }}">
+                    <a href="{{ route('users.index') }}"
+                        class="nav-link d-flex align-items-center justify-items-center text-black">
                         <i class="ti ti-user fs-3"></i>
                         <p class="">User</p>
                     </a>
                 </li>
-            
+
                 <li class="nav-item {{ request()->routeIs('produk') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('produk') }}" class="nav-link d-flex align-items-center justify-items-center text-black">
+                    <a href="{{ route('produk') }}"
+                        class="nav-link d-flex align-items-center justify-items-center text-black">
                         <i class="ti ti-box fs-3"></i>
                         <p class="">Products</p>
                     </a>
                 </li>
-            
+
                 <li class="nav-item {{ request()->routeIs('category') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('category') }}" class="nav-link d-flex align-items-center justify-items-center text-black">
+                    <a href="{{ route('category') }}"
+                        class="nav-link d-flex align-items-center justify-items-center text-black">
                         <i class="ti ti-category fs-3"></i>
                         <p class="">Category</p>
                     </a>
                 </li>
-            
+
                 <li class="nav-item {{ request()->routeIs('customers') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('customers') }}" class="nav-link d-flex align-items-center justify-items-center text-black">
+                    <a href="{{ route('customers') }}"
+                        class="nav-link d-flex align-items-center justify-items-center text-black">
                         <i class="ti ti-users fs-3"></i>
                         <p class="">Customers</p>
                     </a>
                 </li>
-            
+
                 <li class="nav-item {{ request()->routeIs('stok') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('stok') }}" class="nav-link d-flex align-items-center justify-items-center text-black">
+                    <a href="{{ route('stok') }}"
+                        class="nav-link d-flex align-items-center justify-items-center text-black">
                         <i class="ti ti-building-warehouse fs-3"></i>
                         <p class="">Stock</p>
                     </a>
                 </li>
-            
+
                 <li class="nav-item {{ request()->routeIs('history') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('history') }}" class="nav-link d-flex align-items-center justify-items-center text-black">
+                    <a href="{{ route('history') }}"
+                        class="nav-link d-flex align-items-center justify-items-center text-black">
                         <i class="ti ti-history fs-3"></i>
                         <p class="">History Transaction</p>
                     </a>
                 </li>
             </ul>
-            
+
             {{-- <ul>
                 <li class="nav-item mt-1">
                     <a href="#" class="nav-link d-flex align-items-center justify-items-center  text-black">

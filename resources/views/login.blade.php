@@ -212,13 +212,6 @@
             style="background-color: var(--bg-surface-lowest);">
             <div class="w-100" style="max-width: 400px;">
                 <div class="text-center text-lg-start mb-5">
-                    <div class="d-lg-none d-flex justify-content-center mb-4">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="material-symbols-outlined text-primary-custom fs-2"
-                                style="font-variation-settings: 'FILL' 1;">step_into</span>
-                            <span class="font-headline-lg text-primary-custom">Step Point</span>
-                        </div>
-                    </div>
                     <h2 class="font-headline-xl text-dark text-center mt-5">Login</h2>
                     <p class="text-on-surface-variant small">Please enter your credentials to access the management
                         dashboard.</p>

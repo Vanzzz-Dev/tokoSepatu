@@ -8,14 +8,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// =========== View =======
-Route::view('/login','login');
-Route::post('/login-Proses', [LoginController::class, 'login'])->name('LoginProses');
 Route::get('/dashboard', function(){
     return view('dashboard'); 
 })->name('dashboard');
 
+// Login
+Route::view('/login','login');
+Route::post('/login-Proses', [LoginController::class, 'login'])->name('LoginProses');
 
+// CURD
 Route::resource('users', UserController::class);
 Route::view('/produk','produk')->name('produk');
 Route::view('/customers','customers')->name('customers');
@@ -28,3 +29,6 @@ Route::view('/kasir-dahsboard','kasir.dashboard')->name('dahsboardKasir');
 Route::view('/kasir-pembayaran','kasir.pembayaran')->name('pembayarandKasir');
 
 
+Route::fallback(function(){
+    return response()->view('404');
+});
