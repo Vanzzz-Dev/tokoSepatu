@@ -12,7 +12,7 @@ class CheckRole
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::user()->role !== 'admin') {
-            return redirect('/kasir-dahsboard');
+            return redirect('/kasir-dahsboard'); 
         }
 
         return $next($request);

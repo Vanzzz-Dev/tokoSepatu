@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->decimal('total_tagihan', 12, 2); 
-            $table->decimal('jumlah_diterima', 12, 2); 
-            $table->decimal('kembalian', 12, 2); 
-            $table->enum('metode_pembayaran', ['Tunai', 'QRIS', 'Kartu']);
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->integer('quantity'); // Angka positif untuk masuk (+), negatif untuk keluar (-)
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('stocks');
     }
 };

@@ -16,10 +16,13 @@
                     <div class="text-end">
                         <h5 class="m-0 text-dark fw-bold"
                             style="font-size: 14px; font-family: 'Inter', sans-serif; line-height: 1.2;">
-                            Alex Thompson
+                            {{-- Mengambil nama dari kolom 'name' di tabel users --}}
+                            {{ Auth::user()->name }}
                         </h5>
-                        <p class="m-0 text-muted" style="font-size: 11px; font-family: 'Inter', sans-serif;">
-                            Store Manager
+                        <p class="m-0 text-muted text-capitalize"
+                            style="font-size: 11px; font-family: 'Inter', sans-serif;">
+                            {{-- Mengambil role dari kolom 'role' di tabel users --}}
+                            {{ Auth::user()->role }}
                         </p>
                     </div>
 

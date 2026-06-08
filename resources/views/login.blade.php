@@ -74,7 +74,7 @@
             color: var(--text-on-surface-variant) !important;
         }
 
-        .material-symbols-outlined{
+        .material-symbols-outlined {
             position: relative;
             top: -35px;
         }
@@ -219,6 +219,7 @@
 
                 <form action="{{ route('LoginProses')  }}" method="POST">
                     @csrf
+
                     <div class="mb-4">
                         <label class="text-on-surface-variant fw-semibold small mb-2 ms-1" for="email">Email
                             Address</label>
@@ -238,7 +239,7 @@
                         <div class="form-group-custom d-flex align-items-center">
                             <span class="material-symbols-outlined">lock</span>
                             <input class="form-control form-control-custom w-100" id="password" placeholder="Password"
-                                required type="password" name="password"/>
+                                required type="password" name="password" />
                             <i id="togglePassword" class="ti ti-eye fs-4"></i>
                         </div>
                     </div>
@@ -256,6 +257,20 @@
                 </div>
             </div>
         </section>
+        {{-- Alert Floating di Pojok Kanan Atas --}}
+        @if (session('store'))
+            <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999; margin-top: 20px; margin-right: 20px;">
+                <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center gap-2 border-0 shadow-lg text-white"
+                    role="alert" style="border-radius: 12px; font-size: 14px; background-color: #dc3545; min-width: 300px;">
+                    <i class="ti ti-alert-circle fs-4"></i>
+                    <div class="pe-4">
+                        <strong>Gagal!</strong> {{ session('store') }}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white shadow-none small m-0" data-bs-dismiss="alert"
+                        aria-label="Close" style="font-size: 10px;"></button>
+                </div>
+            </div>
+        @endif
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -263,31 +278,39 @@
         crossorigin="anonymous"></script>
 
     <script>
-     
-            const password = document.getElementById('password');
-            const togglePassword = document.getElementById('togglePassword');
+        // Menghilangkan alert secara otomatis dan perlahan
+        const alertElement = document.getElementById('floatingAlert');
+        if (alertElement) {
+            setTimeout(() => {
+                // Menggunakan library bootstrap untuk trigger fungsi close bawaan
+                const bsAlert = new bootstrap.Alert(alertElement.querySelector('.alert'));
+                bsAlert.close();
+            }, 4000); // 4000ms = Alert akan tampil selama 4 detik sebelum mulai hilang perlahan
+        }
+        const password = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
 
-            togglePassword.addEventListener('click', () => {
-                if (password.type === 'password') {
-                    password.type = 'text';
-                    togglePassword.classList.remove('ti-eye');
-                    togglePassword.classList.add('ti-eye-off');
-                } else {
-                    password.type = 'password';
-                    togglePassword.classList.remove('ti-eye-off');
-                    togglePassword.classList.add('ti-eye');
-                }
-            });
+        togglePassword.addEventListener('click', () => {
+            if (password.type === 'password') {
+                password.type = 'text';
+                togglePassword.classList.remove('ti-eye');
+                togglePassword.classList.add('ti-eye-off');
+            } else {
+                password.type = 'password';
+                togglePassword.classList.remove('ti-eye-off');
+                togglePassword.classList.add('ti-eye');
+            }
+        });
 
-            document.addEventListener('mousemove', (e) => {
-                const moveX = (e.clientX - window.innerWidth / 2) * 0.005;
-                const moveY = (e.clientY - window.innerHeight / 2) * 0.005;
-                const img = document.querySelector('section img');
-                if (img) {
-                    img.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`;
-                }
-            });
-      
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.005;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.005;
+            const img = document.querySelector('section img');
+            if (img) {
+                img.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`;
+            }
+        });
+
     </script>
 </body>
 

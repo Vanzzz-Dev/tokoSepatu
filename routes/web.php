@@ -1,34 +1,49 @@
 <?php
 
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KasirController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function(){
-    return view('dashboard'); 
-})->name('dashboard');
-
 // Login
-Route::view('/login','login');
+Route::view('/login','login')->name('login');
 Route::post('/login-Proses', [LoginController::class, 'login'])->name('LoginProses');
 
-// CURD
-Route::resource('users', UserController::class);
-Route::view('/produk','produk')->name('produk');
-Route::view('/customers','customers')->name('customers');
-Route::view('/stok','stok')->name('stok');
-Route::view('/category','category')->name('category');
-Route::view('/history','history')->name('history');
+// Log Out
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth', 'role'])->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+
+    Route::resource('users', UserController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('product', ProductController::class);
+    Route::resource('customers', CustomerController::class);
+    Route::get('/stock', [StockController::class, 'index'])->name('stok');
+    Route::post('/stock', [StockController::class, 'store'])->name('stock.store');
+});
 
 // ================ Kasir ==============
-Route::view('/kasir-dahsboard','kasir.dashboard')->name('dahsboardKasir');
-Route::view('/kasir-pembayaran','kasir.pembayaran')->name('pembayarandKasir');
+Route::get('/kasir-dashboard', [KasirController::class, 'index'])->name('kasir-dahsboard');
+Route::post('/checkout/proses', [KasirController::class, 'prosesCheckout'])->name('checkout.proses');
+Route::get('/pembayaran', [KasirController::class, 'halamanPembayaran'])->name('pembayaran.index');
 
+
+Route::post('/transaction/store', [TransactionController::class, 'store'])->name('transaction.store');
 
 Route::fallback(function(){
     return response()->view('404');
 });
+

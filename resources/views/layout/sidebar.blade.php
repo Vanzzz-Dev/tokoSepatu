@@ -1,22 +1,12 @@
 <aside class="app-sidebar bg-white shadow" data-bs-theme="dark">
-    <!--begin::Sidebar Brand-->
     <div class="sidebar-brand">
-        <!--begin::Brand Link-->
         <a href="../index.html" class="brand-link">
-            <!--begin::Brand Image-->
             <img src="{{ asset('Soucre/src/assets/img/Logo.png') }}" alt="Logo" width="60px" />
-            <!--end::Brand Image-->
-            <!--begin::Brand Text-->
             <span class="brand-text fw-bold">Step Point</span>
-            <!--end::Brand Text-->
         </a>
-        <!--end::Brand Link-->
     </div>
-    <!--end::Sidebar Brand-->
-    <!--begin::Sidebar Wrapper-->
-    <div class="sidebar-wrapper">
-        <nav class="mt-2">
-            <!--begin::Sidebar Menu-->
+    <div class="sidebar-wrapper d-flex flex-column justify-content-between" style="height: calc(100% - 60px);">
+        <nav class="mt-2 w-100">
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation"
                 aria-label="Main navigation" data-accordion="false" id="navigation">
 
@@ -36,24 +26,24 @@
                     </a>
                 </li>
 
-                <li class="nav-item {{ request()->routeIs('produk') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('produk') }}"
-                        class="nav-link d-flex align-items-center justify-items-center text-black">
-                        <i class="ti ti-box fs-3"></i>
-                        <p class="">Products</p>
-                    </a>
-                </li>
-
-                <li class="nav-item {{ request()->routeIs('category') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('category') }}"
+                <li class="nav-item {{ request()->routeIs('categories') ? 'current' : 'mt-1' }}">
+                    <a href="{{ route('categories.index') }}"
                         class="nav-link d-flex align-items-center justify-items-center text-black">
                         <i class="ti ti-category fs-3"></i>
                         <p class="">Category</p>
                     </a>
                 </li>
 
+                <li class="nav-item {{ request()->routeIs('products') ? 'current' : 'mt-1' }}">
+                    <a href="{{ route('product.index') }}"
+                        class="nav-link d-flex align-items-center justify-items-center text-black">
+                        <i class="ti ti-box fs-3"></i>
+                        <p class="">Products</p>
+                    </a>
+                </li>
+
                 <li class="nav-item {{ request()->routeIs('customers') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('customers') }}"
+                    <a href="{{ route('customers.index') }}"
                         class="nav-link d-flex align-items-center justify-items-center text-black">
                         <i class="ti ti-users fs-3"></i>
                         <p class="">Customers</p>
@@ -67,26 +57,24 @@
                         <p class="">Stock</p>
                     </a>
                 </li>
+            </ul>
+        </nav>
 
-                <li class="nav-item {{ request()->routeIs('history') ? 'current' : 'mt-1' }}">
-                    <a href="{{ route('history') }}"
-                        class="nav-link d-flex align-items-center justify-items-center text-black">
-                        <i class="ti ti-history fs-3"></i>
-                        <p class="">History Transaction</p>
+        {{-- Menu Log Out di Paling Bawah Sidebar --}}
+        <div class="nav sidebar-menu p-3 border-top border-light-subtle">
+            <ul class="nav flex-column">
+                <li class="nav-item logout">
+                    <a href="#" class="nav-link d-flex align-items-center text-danger fw-semibold gap-2"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="ti ti-logout fs-3"></i>
+                        <p class="m-0">Log Out</p>
                     </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </li>
             </ul>
-
-            {{-- <ul>
-                <li class="nav-item mt-1">
-                    <a href="#" class="nav-link d-flex align-items-center justify-items-center  text-black">
-                        <i class="ti ti-settings fs-3"></i>
-                        <p class="">Setting</p>
-                    </a>
-                </li>
-            </ul> --}}
-            <!--end::Sidebar Menu-->
-        </nav>
+        </div>
     </div>
-    <!--end::Sidebar Wrapper-->
 </aside>

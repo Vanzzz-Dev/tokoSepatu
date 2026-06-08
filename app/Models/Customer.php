@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-  public function transction(){
-    return $this->hasMany(Transtion::class);
-  }
+  
+  protected $fillable = [
+    'name',
+    'email',
+    'phone',
+  ];
 }

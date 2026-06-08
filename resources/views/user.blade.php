@@ -33,6 +33,7 @@
                     <form action="{{ route('users.store') }}" method="POST" id="addUserForm">
                         @csrf
                         <div class="modal-body px-4 py-3">
+                            {{-- Full Name --}}
                             <div class="mb-3">
                                 <label for="fullName" class="form-label fw-medium text-dark small mb-1">Full Name</label>
                                 <div class="input-group align-items-center position-relative">
@@ -45,19 +46,21 @@
                                 </div>
                             </div>
 
-                            <div class="row g-3 mb-3">
-                                <div class="col-12 col-sm-6">
-                                    <label for="emailAddress" class="form-label fw-medium text-dark small mb-1">Email
-                                        Address</label>
-                                    <div class="input-group align-items-center position-relative">
-                                        <span class="position-absolute ps-3 text-muted z-3 d-flex align-items-center"><i
-                                                class="ti ti-mail fs-5"></i></span>
-                                        <input type="email" id="emailAddress" name="email"
-                                            class="form-control rounded-3 py-2-5 border-light-subtle bg-light bg-opacity-25"
-                                            placeholder="contoh@mail.com" style="padding-left: 42px; font-size: 14px;"
-                                            required>
-                                    </div>
+                            {{-- Email Address --}}
+                            <div class="mb-3">
+                                <label for="emailAddress" class="form-label fw-medium text-dark small mb-1">Email
+                                    Address</label>
+                                <div class="input-group align-items-center position-relative">
+                                    <span class="position-absolute ps-3 text-muted z-3 d-flex align-items-center"><i
+                                            class="ti ti-mail fs-5"></i></span>
+                                    <input type="email" id="emailAddress" name="email"
+                                        class="form-control rounded-3 py-2-5 border-light-subtle bg-light bg-opacity-25"
+                                        placeholder="contoh@mail.com" style="padding-left: 42px; font-size: 14px;" required>
                                 </div>
+                            </div>
+
+                            {{-- Role & Password (Sejajar) --}}
+                            <div class="row g-3 mb-4">
                                 <div class="col-12 col-sm-6">
                                     <label for="userRole" class="form-label fw-medium text-dark small mb-1">Role</label>
                                     <div class="input-group align-items-center position-relative">
@@ -67,27 +70,26 @@
                                             class="form-select rounded-3 py-2-5 border-light-subtle bg-light bg-opacity-25"
                                             style="padding-left: 42px; font-size: 14px;" required>
                                             <option value="" disabled selected>Pilih Peran</option>
-                                            <option value="Super Admin">Super Admin</option>
-                                            <option value="Admin">Admin</option>
+                                            <option value="admin">Admin</option>
+                                            <option value="kasir">Kasir</option>
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="userPassword" class="form-label fw-medium text-dark small mb-1">Password</label>
-                                <div class="input-group align-items-center position-relative">
-                                    <span class="position-absolute ps-3 text-muted z-3 d-flex align-items-center"><i
-                                            class="ti ti-lock fs-5"></i></span>
-                                    <input type="password" id="userPassword" name="password"
-                                        class="form-control rounded-3 py-2-5 border-light-subtle bg-light bg-opacity-25"
-                                        placeholder="Minimal 8 karakter" minlength="8"
-                                        style="padding-left: 42px; padding-right: 42px; font-size: 14px;" required>
-                                    <button type="button"
-                                        class="position-absolute end-0 border-0 bg-transparent pe-3 text-muted z-3 h-100 d-flex align-items-center shadow-none"
-                                        id="togglePasswordBtn">
-                                        <i class="ti ti-eye fs-5" id="togglePasswordIcon"></i>
-                                    </button>
+                                <div class="col-12 col-sm-6">
+                                    <label for="userPassword"
+                                        class="form-label fw-medium text-dark small mb-1">Password</label>
+                                    <div class="input-group align-items-center position-relative">
+                                        <span class="position-absolute ps-3 text-muted z-3 d-flex align-items-center"><i
+                                                class="ti ti-lock fs-5"></i></span>
+                                        <input type="password" id="userPassword" name="password"
+                                            class="form-control rounded-3 py-2-5 border-light-subtle bg-light bg-opacity-25 password-field"
+                                            placeholder="Minimal 8 karakter" minlength="8"
+                                            style="padding-left: 42px; padding-right: 42px; font-size: 14px;" required>
+                                        <button type="button"
+                                            class="position-absolute end-0 border-0 bg-transparent pe-3 text-muted z-3 h-100 d-flex align-items-center shadow-none toggle-password-btn">
+                                            <i class="ti ti-eye fs-5 toggle-password-icon"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -131,12 +133,13 @@
             </div>
         </div>
 
+        {{-- TABLE DATA --}}
         <div class="table-responsive">
             <table class="table align-middle mb-0 text-start table-hover">
                 <thead class="table-light text-muted small fw-semibold">
                     <tr>
                         <th class="px-4 py-3 border-bottom border-light-subtle">Admin Name</th>
-                        <th class="px-4 py-3 border-bottom border-light-subtle">Phone Number</th>
+                        <th class="px-4 py-3 border-bottom border-light-subtle">Email Address</th>
                         <th class="px-4 py-3 border-bottom border-light-subtle">Role</th>
                         <th class="px-4 py-3 border-bottom border-light-subtle text-end">Actions</th>
                     </tr>
@@ -152,11 +155,10 @@
                                     </div>
                                     <div>
                                         <p class="fw-semibold m-0" style="font-size: 14px;">{{ $user->name }}</p>
-                                        <p class="text-muted small m-0" style="font-size: 12px;">{{ $user->email }}</p>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-4 py-3">-</td>
+                            <td class="px-4 py-3" style="font-size: 14px;">{{ $user->email }}</td>
                             <td class="px-4 py-3">
                                 <span class="badge bg-success bg-opacity-10 text-success fw-semibold">
                                     {{ $user->role }}
@@ -184,39 +186,60 @@
                         {{-- Modal Edit --}}
                         <div class="modal fade" id="editModal{{ $user->id }}" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content rounded-4 border-0">
+                                <div class="modal-content rounded-4 border-0 shadow-lg bg-white">
                                     <form action="{{ route('users.update', $user->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Edit User</h5>
+                                        <div class="modal-header border-0 pt-4 px-4 pb-2">
+                                            <h5 class="modal-title fw-bold text-dark" style="font-family: 'Inter', sans-serif;">
+                                                Edit User</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body px-4 py-2">
                                             <div class="mb-3">
-                                                <label>Nama</label>
-                                                <input type="text" name="name" class="form-control" value="{{ $user->name }}">
+                                                <label class="form-label small fw-medium text-dark mb-1">Nama</label>
+                                                <input type="text" name="name" class="form-control rounded-3"
+                                                    value="{{ $user->name }}" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label>Email</label>
-                                                <input type="email" name="email" class="form-control"
-                                                    value="{{ $user->email }}">
+                                                <label class="form-label small fw-medium text-dark mb-1">Email</label>
+                                                <input type="email" name="email" class="form-control rounded-3"
+                                                    value="{{ $user->email }}" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label>Role</label>
-                                                <select name="role" class="form-select">
+                                                <label class="form-label small fw-medium text-dark mb-1">Role</label>
+                                                <select name="role" class="form-select rounded-3" required>
                                                     <option value="Super Admin" {{ $user->role == 'Super Admin' ? 'selected' : '' }}>Super Admin</option>
                                                     <option value="Admin" {{ $user->role == 'Admin' ? 'selected' : '' }}>Admin
                                                     </option>
+                                                    <option value="Kasir" {{ $user->role == 'Kasir' ? 'selected' : '' }}>Kasir
+                                                    </option>
                                                 </select>
                                             </div>
-                                            <div class="mb-3">
-                                                <label>Password Baru</label>
-                                                <input type="password" name="password" class="form-control">
+                                            <div class="mb-2">
+                                                <label class="form-label small fw-medium text-dark mb-1">Password Baru
+                                                    (Kosongkan jika tidak diganti)</label>
+                                                <div class="input-group align-items-center position-relative">
+                                                    <span
+                                                        class="position-absolute ps-3 text-muted z-3 d-flex align-items-center"><i
+                                                            class="ti ti-lock fs-5"></i></span>
+                                                    <input type="password" name="password"
+                                                        class="form-control rounded-3 password-field"
+                                                        placeholder="Minimal 8 karakter"
+                                                        style="padding-left: 42px; padding-right: 42px;">
+                                                    <button type="button"
+                                                        class="position-absolute end-0 border-0 bg-transparent pe-3 text-muted z-3 h-100 d-flex align-items-center shadow-none toggle-password-btn">
+                                                        <i class="ti ti-eye fs-5 toggle-password-icon"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-primary">Update</button>
+                                        <div class="modal-footer border-0 px-4 py-3">
+                                            <button type="button"
+                                                class="btn btn-light fw-medium border-0 px-4 rounded-3 text-secondary"
+                                                data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary fw-semibold px-4 rounded-3"
+                                                style="background-color: #0d3ba1; border: none;">Update</button>
                                         </div>
                                     </form>
                                 </div>
@@ -241,22 +264,29 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Logika Sembunyikan/Tampilkan Password
-            const passwordInput = document.getElementById('userPassword');
-            const togglePasswordBtn = document.getElementById('togglePasswordBtn');
-            const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+            // LOGIKA GLOBAL SHOW/HIDE PASSWORD BERDASARKAN CLASS
+            const toggleButtons = document.querySelectorAll('.toggle-password-btn');
 
-            if (togglePasswordBtn) {
-                togglePasswordBtn.addEventListener('click', function () {
-                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                    passwordInput.setAttribute('type', type);
-                    if (type === 'password') {
-                        togglePasswordIcon.className = 'ti ti-eye fs-5';
-                    } else {
-                        togglePasswordIcon.className = 'ti ti-eye-off fs-5';
+            toggleButtons.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    // Mencari elemen input group pembungkus terdekat
+                    const inputGroup = this.closest('.input-group');
+                    // Menemukan input password dan icon mata di dalam input group tersebut
+                    const passwordInput = inputGroup.querySelector('.password-field');
+                    const togglePasswordIcon = inputGroup.querySelector('.toggle-password-icon');
+
+                    if (passwordInput && togglePasswordIcon) {
+                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordInput.setAttribute('type', type);
+
+                        if (type === 'password') {
+                            togglePasswordIcon.className = 'ti ti-eye fs-5 toggle-password-icon';
+                        } else {
+                            togglePasswordIcon.className = 'ti ti-eye-off fs-5 toggle-password-icon';
+                        }
                     }
                 });
-            }
+            });
 
             // LOGIKA DINAMIS MODAL DELETE CONFIRMATION
             const deleteButtons = document.querySelectorAll('.btn-trigger-delete');
@@ -269,12 +299,8 @@
                     const url = this.getAttribute('data-url');
                     const name = this.getAttribute('data-name');
 
-                    // Set action form ke route destroy user terpilih
                     deleteForm.setAttribute('action', url);
-                    // Tampilkan nama user di teks deskripsi modal
                     deleteNameSpan.textContent = name;
-
-                    // Buka modal konfirmasi hapus
                     confirmModal.show();
                 });
             });

@@ -109,10 +109,6 @@
             transition: all 0.1s ease;
         }
 
-        .btn-numpad:hidden-p {
-            background-color: #dce9ff;
-        }
-
         .btn-numpad:active {
             transform: scale(0.95);
         }
@@ -135,219 +131,196 @@
             vertical-align: middle;
         }
     </style>
-    </head>
 
-    <body class="py-4">
+    <main class="container-fluid px-4 style-container"
+        style="max-width: 1200px; margin: 0 auto; padding-top: 1.5rem; padding-bottom: 1.5rem;">
 
-        <main class="container-fluid px-4 style-container" style="max-w: 1200px; margin: 0 auto;">
-
-            <div
-                class="d-flex flex-column flex-sm-row align-items-start align-items-sm-end justify-content-between mb-4 gap-3">
-                <div class="d-flex align-items-center gap-3">
-                    <button onclick="goBack()"
-                        class="btn bg-white card-shadow d-flex align-items-center justify-content-center"
-                        style="width: 48px; height: 48px; border-radius: 12px;" title="Kembali">
-                        <i class="ti ti-chevron-left"></i> </button>
-                    <div>
-                        <h1 class="text-primary-custom mb-0 h2">Pembayaran</h1>
-                    </div>
+        <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-end justify-content-between mb-4 gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <button onclick="goBack()" class="btn bg-white card-shadow d-flex align-items-center justify-content-center"
+                    style="width: 48px; height: 48px; border-radius: 12px;" title="Kembali">
+                    <i class="ti ti-chevron-left"></i>
+                </button>
+                <div>
+                    <h1 class="text-primary-custom mb-0 h2">Pembayaran</h1>
                 </div>
-                <div class="text-sm-end">
-                    <p class="text-uppercase text-muted small fw-bold mb-0" style="letter-spacing: 0.05em;">Total Tagihan
-                    </p>
-                    <p class="h2 mb-0 fw-bold">Rp 3.051.390</p>
+            </div>
+            <div class="text-sm-end">
+                <p class="text-uppercase text-muted small fw-bold mb-0" style="letter-spacing: 0.05em;">Total Tagihan</p>
+                <p class="h2 mb-0 fw-bold text-primary-custom">Rp {{ number_format($total, 0, ',', '.') }}</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-12 col-lg-7">
+                <div class="d-flex flex-column gap-4">
+
+                    <div class="card card-shadow border-0 bg-white p-4" style="border-radius: 16px;">
+                        <h3 class="h5 mb-3">Metode Pembayaran</h3>
+                        <div class="row g-3">
+                            <div class="col-4">
+                                <button
+                                    class="payment-method btn d-flex flex-column align-items-center justify-content-center p-3 rounded-3 w-100"
+                                    type="button" onclick="selectMethod(this, 'Tunai')">
+                                    <i class="ti ti-cash fs-3"></i>
+                                    <span class="small fw-semibold text-dark">Tunai</span>
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <button
+                                    class="payment-method btn d-flex flex-column align-items-center justify-content-center p-3 rounded-3 w-100"
+                                    type="button" onclick="selectMethod(this, 'QRIS')">
+                                    <i class="ti ti-qrcode fs-3"></i>
+                                    <span class="small fw-semibold text-dark">QRIS</span>
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <button
+                                    class="payment-method btn d-flex flex-column align-items-center justify-content-center p-3 rounded-3 w-100"
+                                    type="button" onclick="selectMethod(this, 'Kartu')">
+                                    <i class="ti ti-credit-card fs-3"></i>
+                                    <span class="small fw-semibold text-dark">Kartu</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-shadow border-0 bg-white p-4" style="border-radius: 16px;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="h5 mb-0">Jumlah Diterima</h3>
+                            <span class="badge bg-light text-primary-custom px-3 py-2 rounded-pill border small">Mata Uang:
+                                IDR</span>
+                        </div>
+
+                        <div class="mb-3 position-relative cash-input-container">
+                            <span class="currency-addon fw-bold">Rp</span>
+                            <input type="text" class="form-control text-end" id="cash-input" value="0" readonly />
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-6 col-md-3">
+                                <button class="btn btn-outline-secondary w-100 py-2 small fw-semibold" type="button"
+                                    onclick="setAmount({{ $total }})">Uang Pas</button>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <button class="btn btn-outline-secondary w-100 py-2 small fw-semibold" type="button"
+                                    onclick="setAmount(Math.ceil({{ $total }} / 50000) * 50000)">Pembulatan</button>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <button class="btn btn-outline-secondary w-100 py-2 small fw-semibold" type="button"
+                                    onclick="setAmount(50000)">Rp 50rb</button>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <button class="btn btn-outline-secondary w-100 py-2 small fw-semibold" type="button"
+                                    onclick="setAmount(100000)">Rp 100rb</button>
+                            </div>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-4"><button class="btn btn-numpad w-100" type="button"
+                                    onclick="appendDigit(1)">1</button></div>
+                            <div class="col-4"><button class="btn btn-numpad w-100" type="button"
+                                    onclick="appendDigit(2)">2</button></div>
+                            <div class="col-4"><button class="btn btn-numpad w-100" type="button"
+                                    onclick="appendDigit(3)">3</button></div>
+                            <div class="col-4"><button class="btn btn-numpad w-100" type="button"
+                                    onclick="appendDigit(4)">4</button></div>
+                            <div class="col-4"><button class="btn btn-numpad w-100" type="button"
+                                    onclick="appendDigit(5)">5</button></div>
+                            <div class="col-4"><button class="btn btn-numpad w-100" type="button"
+                                    onclick="appendDigit(6)">6</button></div>
+                            <div class="col-4"><button class="btn btn-numpad w-100" type="button"
+                                    onclick="appendDigit(7)">7</button></div>
+                            <div class="col-4"><button class="btn btn-numpad w-100" type="button"
+                                    onclick="appendDigit(8)">8</button></div>
+                            <div class="col-4"><button class="btn btn-numpad w-100" type="button"
+                                    onclick="appendDigit(9)">9</button></div>
+                            <div class="col-4">
+                                <button class="btn btn-numpad w-100 text-danger" type="button"
+                                    style="background-color: var(--error-container); color: var(--on-error-container) !important;"
+                                    onclick="clearInput()">C</button>
+                            </div>
+                            <div class="col-4"><button class="btn btn-numpad w-100" type="button"
+                                    onclick="appendDigit(0)">0</button></div>
+                            <div class="col-4">
+                                <button class="btn btn-numpad w-100 d-flex align-items-center justify-content-center"
+                                    type="button" onclick="popDigit()">
+                                    <i class="ti ti-backspace fs-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="row g-4">
+            <div class="col-12 col-lg-5">
+                <div class="d-flex flex-column gap-4 h-100">
 
-                <div class="col-12 col-lg-7">
-                    <div class="d-flex flex-column gap-4">
-
-                        <div class="card card-shadow border-0 bg-white p-4" style="border-radius: 16px;">
-                            <h3 class="h5 mb-3">Metode Pembayaran</h3>
-                            <div class="row g-3">
-                                <div class="col-4">
-                                    <button
-                                        class="payment-method btn w-full d-flex flex-column align-items-center justify-content-center p-3 rounded-3 w-100"
-                                        onclick="selectMethod(this)">
-                                        <i class="ti ti-cash fs-3"></i>
-                                        <span class="small fw-semibold text-dark">Tunai</span>
-                                    </button>
-                                </div>
-                                <div class="col-4">
-                                    <button
-                                        class="payment-method btn w-full d-flex flex-column align-items-center justify-content-center p-3 rounded-3 w-100"
-                                        onclick="selectMethod(this)">
-                                        <i class="ti ti-qrcode fs-3"></i>
-                                        <span class="small fw-semibold text-dark">QRIS</span>
-                                    </button>
-                                </div>
-                                <div class="col-4">
-                                    <button
-                                        class="payment-method btn w-full d-flex flex-column align-items-center justify-content-center p-3 rounded-3 w-100"
-                                        onclick="selectMethod(this)">
-                                        <i class="ti ti-credit-card fs-3"></i>
-                                        <span class="small fw-semibold text-dark">Kartu</span>
-                                    </button>
-                                </div>
-                            </div>
+                    <div class="card card-shadow border-0 bg-white p-4 flex-grow-1 d-flex flex-column"
+                        style="border-radius: 16px;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="h5 mb-0">Ringkasan Pesanan</h3>
+                            <span class="text-muted small fw-semibold">{{ count($cart) }} Jenis Produk</span>
                         </div>
 
-                        <div class="card card-shadow border-0 bg-white p-4" style="border-radius: 16px;">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h3 class="h5 mb-0">Jumlah Diterima</h3>
-                                <span class="badge bg-light text-primary-custom px-3 py-2 rounded-pill border small">Mata
-                                    Uang: IDR</span>
-                            </div>
-
-                            <div class="mb-3 position-relative cash-input-container">
-                                <span class="currency-addon fw-bold">Rp</span>
-                                <input type="text" class="form-control text-end" id="cash-input" value="0" readonly />
-                            </div>
-
-                            <div class="row g-2 mb-3">
-                                <div class="col-6 col-md-3">
-                                    <button class="btn btn-outline-secondary w-100 py-2 small fw-semibold"
-                                        onclick="setAmount(3051390)">Uang Pas</button>
+                        <div class="custom-scrollbar pe-1 d-flex flex-column gap-3 flex-grow-1">
+                            @forelse ($cart as $item)
+                                <div class="d-flex gap-3 p-2 bg-light border rounded-3 align-items-center">
+                                    <div class="bg-secondary-subtle rounded flex-shrink-0 overflow-hidden d-flex align-items-center justify-content-center p-1"
+                                        style="width: 64px; height: 64px; background-color: var(--surface-low);">
+                                        <img alt="{{ $item['name'] }}" class="img-fluid"
+                                            style="mix-blend-mode: multiply; max-height: 100%; object-fit: contain;"
+                                            src="{{ $item['img'] }}" />
+                                    </div>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <p class="mb-0 fw-bold small text-truncate" title="{{ $item['name'] }}">
+                                            {{ $item['name'] }}</p>
+                                        <p class="text-muted mb-1" style="font-size: 11px;">ID Produk: {{ $item['id'] }}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="text-muted" style="font-size: 11px;">{{ $item['quantity'] }} x Rp
+                                                {{ number_format($item['harga'], 0, ',', '.') }}</span>
+                                            <span class="fw-bold small" style="font-family: 'JetBrains Mono', monospace;">
+                                                Rp {{ number_format($item['harga'] * $item['quantity'], 0, ',', '.') }}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-6 col-md-3">
-                                    <button class="btn btn-outline-secondary w-100 py-2 small fw-semibold"
-                                        onclick="setAmount(3100000)">Rp 3.1m</button>
+                            @empty
+                                <div class="text-center my-auto py-5 text-muted">
+                                    <i class="ti ti-shopping-cart-x fs-1 mb-2"></i>
+                                    <p class="mb-0 small">Tidak ada item di keranjang.</p>
                                 </div>
-                                <div class="col-6 col-md-3">
-                                    <button class="btn btn-outline-secondary w-100 py-2 small fw-semibold"
-                                        onclick="setAmount(3500000)">Rp 3.5m</button>
-                                </div>
-                                <div class="col-6 col-md-3">
-                                    <button class="btn btn-outline-secondary w-100 py-2 small fw-semibold"
-                                        onclick="setAmount(4000000)">Rp 4.0m</button>
-                                </div>
-                            </div>
-
-                            <div class="row g-2">
-                                <div class="col-4"><button class="btn btn-numpad w-100" onclick="appendDigit(1)">1</button>
-                                </div>
-                                <div class="col-4"><button class="btn btn-numpad w-100" onclick="appendDigit(2)">2</button>
-                                </div>
-                                <div class="col-4"><button class="btn btn-numpad w-100" onclick="appendDigit(3)">3</button>
-                                </div>
-                                <div class="col-4"><button class="btn btn-numpad w-100" onclick="appendDigit(4)">4</button>
-                                </div>
-                                <div class="col-4"><button class="btn btn-numpad w-100" onclick="appendDigit(5)">5</button>
-                                </div>
-                                <div class="col-4"><button class="btn btn-numpad w-100" onclick="appendDigit(6)">6</button>
-                                </div>
-                                <div class="col-4"><button class="btn btn-numpad w-100" onclick="appendDigit(7)">7</button>
-                                </div>
-                                <div class="col-4"><button class="btn btn-numpad w-100" onclick="appendDigit(8)">8</button>
-                                </div>
-                                <div class="col-4"><button class="btn btn-numpad w-100" onclick="appendDigit(9)">9</button>
-                                </div>
-                                <div class="col-4">
-                                    <button class="btn btn-numpad w-100 text-danger"
-                                        style="background-color: var(--error-container); color: var(--on-error-container) !important;"
-                                        onclick="clearInput()">C</button>
-                                </div>
-                                <div class="col-4"><button class="btn btn-numpad w-100" onclick="appendDigit(0)">0</button>
-                                </div>
-                                <div class="col-4">
-                                    <button class="btn btn-numpad w-100 d-flex align-items-center justify-content-center"
-                                        onclick="popDigit()">
-                                        <i class="ti ti-backspace fs-2"></i>
-                                    </button>
-                                </div>
-                            </div>
+                            @endforelse
                         </div>
 
+                        <div class="mt-4 pt-3 border-top border-secondary border-dashed border-1">
+                            <div class="d-flex justify-content-between text-muted small mb-1">
+                                <span>Subtotal</span>
+                                <span>Rp {{ number_format($total, 0, ',', '.') }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between text-muted small mb-2">
+                                <span>Diskon</span>
+                                <span class="text-danger">- Rp 0</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                <span class="fw-bold text-dark">Total Tagihan</span>
+                                <span class="h4 mb-0 fw-bold text-primary-custom">Rp
+                                    {{ number_format($total, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-12 col-lg-5">
-                    <div class="d-flex flex-column gap-4 h-100">
+                    <form action="{{ route('transaction.store') }}" method="POST" id="payment-form">
+                        @csrf
+                        <input type="hidden" name="total_tagihan" value="{{ $total }}">
+                        <input type="hidden" name="jumlah_diterima" id="hidden-jumlah-diterima" value="0">
+                        <input type="hidden" name="kembalian" id="hidden-kembalian" value="0">
+                        <input type="hidden" name="metode_pembayaran" id="hidden-metode-pembayaran" value="Tunai">
 
-                        <div class="card card-shadow border-0 bg-white p-4 flex-grow-1 d-flex flex-column"
+                        <div class="card card-shadow border-0 text-white p-4 bg-primary-custom"
                             style="border-radius: 16px;">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h3 class="h5 mb-0">Ringkasan Pesanan</h3>
-                                <span class="text-muted small fw-semibold">3 Items</span>
-                            </div>
-
-                            <div class="custom-scrollbar pe-1 d-flex flex-column gap-3 flex-grow-1">
-
-                                <div class="d-flex gap-3 p-2 bg-light border rounded-3 align-items-center">
-                                    <div class="bg-secondary-subtle rounded flex-shrink-0 overflow-hidden"
-                                        style="width: 64px; height: 64px;">
-                                        <img alt="Nike Red" class="w-100 h-100 object-fit-cover"
-                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJqwv2lDmg6by3NnhRz8Q1RArfvqbi2EHOiOzsuLTfBmK8M4yVDLRmfUV-3q4U2239rU_I3ZYuWrGth4BFMIkY8KtC2e3QgJqERivyTPU7Haur0dy5Ku4Te2gfJ_5GDl0kIX0noAQi9q8PPAXJh6ro6cOgtYds2dGgZL53o9hG1qOz7ffKaHhT1wfKG4MxaEpkATL6bLkefghe3Ot-VMwnJAV1DjLvGdL0MaU54x9kRqyerRDytoPivCJnEZG-ypa7JCveJacwaw" />
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <p class="mb-0 fw-bold small">Nike Air Zoom Pegasus 38</p>
-                                        <p class="text-muted mb-1" style="font-size: 11px;">Ukuran: 42 • Warna: Crimson Red
-                                        </p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="text-muted" style="font-size: 11px;">1 x Rp 1.899.000</span>
-                                            <span class="fw-bold small" style="font-family: 'JetBrains Mono';">Rp
-                                                1.899.000</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex gap-3 p-2 bg-light border rounded-3 align-items-center">
-                                    <div class="bg-secondary-subtle rounded flex-shrink-0 overflow-hidden"
-                                        style="width: 64px; height: 64px;">
-                                        <img alt="Nike Pastel" class="w-100 h-100 object-fit-cover"
-                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcBmZcn5YiV-4H3y-V5xp7m7dj6zj26cRFlKGBlhUzEOt5y1uLyMN-qa_kd5tg8WM9ufRe3Ks64_cgeQCsaVr3JRptS3XPRgrP_tQbRfJOVgYMib1MC7a8M-vI9RWCPtDitzVbkv5oxPRXJhCKs1NwivgGj2pbTQmNRz87zATxOwcKidwUu5USMmfBr8Sp_3S6zMmef1lLeiFVz1U4hZcg6QYAZkMecKodozTI23xb1YH2KtplORLTvG4EuapinNfMDppQg-2JgQ" />
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <p class="mb-0 fw-bold small">Adidas Originals Stan Smith</p>
-                                        <p class="text-muted mb-1" style="font-size: 11px;">Ukuran: 40 • Warna: White/Green
-                                        </p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="text-muted" style="font-size: 11px;">1 x Rp 999.000</span>
-                                            <span class="fw-bold small" style="font-family: 'JetBrains Mono';">Rp
-                                                999.000</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex gap-3 p-2 bg-light border rounded-3 align-items-center">
-                                    <div class="bg-secondary-subtle rounded flex-shrink-0 overflow-hidden"
-                                        style="width: 64px; height: 64px;">
-                                        <img alt="Vans" class="w-100 h-100 object-fit-cover"
-                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4I5oveY4zmZKjvKGcuYOYA4IC1syFRFm-X-TUqs1h32SC5cOyYXaoDH_pNdpXMuPGYotDH7bVkQEHDtL2-fyhjKVhAtKtBfff8OC76H_wlXUNpDqH_eoaSVBPNXC8WRWddG_ZdToOXwjJi0CEe9skNZ9T0UHKhaGStivyVX9M7mv-7yrMBcXvePmIZXk_19rgf8yrXVNE-CldxkDTjfn3uaCGMOl757q3IDgEfZtqeiUllfHctWk-We6iRTIsTzbY_vzdQ8OT0w" />
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <p class="mb-0 fw-bold small">Step Point Crew Socks</p>
-                                        <p class="text-muted mb-1" style="font-size: 11px;">Ukuran: All Size • Warna: White
-                                        </p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="text-muted" style="font-size: 11px;">2 x Rp 76.695</span>
-                                            <span class="fw-bold small" style="font-family: 'JetBrains Mono';">Rp
-                                                153.390</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="mt-4 pt-3 border-top border-secondary border-dashed border-1">
-                                <div class="d-flex justify-content-between text-muted small mb-1">
-                                    <span>Subtotal</span>
-                                    <span>Rp 3.051.390</span>
-                                </div>
-                                <div class="d-flex justify-content-between text-muted small mb-2">
-                                    <span>Diskon</span>
-                                    <span class="text-danger">- Rp 0</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
-                                    <span class="fw-bold text-dark">Total Tagihan</span>
-                                    <span class="h4 mb-0 fw-bold text-primary-custom">Rp 3.051.390</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card border-0 text-white p-4 shadow-lg bg-primary-custom" style="border-radius: 16px;">
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <div>
                                     <p class="text-uppercase text-white-50 small fw-semibold mb-0"
@@ -360,114 +333,147 @@
                                 </div>
                             </div>
 
-                            <button class="btn btn-light text-primary-custom w-100 py-3 fw-bold h5 mb-3"
+                            <button class="btn btn-light text-primary-custom w-100 py-3 fw-bold h5 mb-0" type="submit"
                                 style="border-radius: 12px; transition: all 0.2s;" id="process-btn">
                                 Proses Pembayaran
                             </button>
                         </div>
+                    </form>
 
-                    </div>
                 </div>
-
             </div>
-        </main>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        </div>
+    </main>
 
-        <script>
-            let currentInput = "0";
-            const totalBill = 3051390;
-            const inputDisplay = document.getElementById("cash-input");
-            const changeDisplay = document.getElementById("change-display");
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-            function goBack() {
-                if (document.referrer !== "") {
-                    window.history.back();
-                } else {
-                    window.location.href = "index.html";
-                }
+    <script>
+        let currentInput = "0";
+        const totalBill = {{ $total }};
+        const inputDisplay = document.getElementById("cash-input");
+        const changeDisplay = document.getElementById("change-display");
+
+        // Target element input hidden form
+        const hiddenJumlahDiterima = document.getElementById("hidden-jumlah-diterima");
+        const hiddenKembalian = document.getElementById("hidden-kembalian");
+        const hiddenMetodePembayaran = document.getElementById("hidden-metode-pembayaran");
+
+        function goBack() {
+            if (document.referrer !== "") {
+                window.history.back();
+            } else {
+                window.location.href = "{{ route('kasir-dahsboard') }}";
             }
+        }
 
-            function formatRupiah(number) {
-                return new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                    minimumFractionDigits: 0,
-                })
-                    .format(number)
-                    .replace("Rp", "");
+        function formatRupiah(number) {
+            return new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0,
+            })
+                .format(number)
+                .replace("Rp", "");
+        }
+
+        function updateUI() {
+            const amount = parseInt(currentInput) || 0;
+            inputDisplay.value = formatRupiah(amount).trim();
+
+            const change = amount - totalBill;
+            const processBtn = document.getElementById("process-btn");
+
+            // Sinkronkan nilai ke input hidden form
+            hiddenJumlahDiterima.value = amount;
+
+            if (change >= 0) {
+                changeDisplay.innerText = "Rp " + formatRupiah(change).trim();
+                hiddenKembalian.value = change;
+                processBtn.disabled = false;
+                processBtn.classList.remove("opacity-50");
+            } else {
+                changeDisplay.innerText = "Rp 0";
+                hiddenKembalian.value = 0;
+                processBtn.disabled = true;
+                processBtn.classList.add("opacity-50");
             }
+        }
 
-            function updateUI() {
+        function appendDigit(digit) {
+            if (currentInput === "0") currentInput = digit.toString();
+            else currentInput += digit.toString();
+            updateUI();
+        }
+
+        // Fitur otomatis ganti nominal untuk metode QRIS & KARTU agar langsung pas tanpa numpad
+        function autoSetAmountForCashless() {
+            const currentMethod = hiddenMetodePembayaran.value;
+            if (currentMethod === 'QRIS' || currentMethod === 'Kartu') {
+                setAmount(totalBill);
+            }
+        }
+
+        function clearInput() {
+            currentInput = "0";
+            updateUI();
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key >= '0' && event.key <= '9') {
+                appendDigit(event.key);
+            } else if (event.key === 'Backspace') {
+                popDigit();
+            } else if (event.key === 'Escape' || event.key.toLowerCase() === 'c') {
+                clearInput();
+            } else if (event.key === 'Enter') {
+                event.preventDefault();
                 const amount = parseInt(currentInput) || 0;
-                inputDisplay.value = formatRupiah(amount).trim();
-
-                const change = amount - totalBill;
-                const processBtn = document.getElementById("process-btn");
-
-                if (change >= 0) {
-                    changeDisplay.innerText = "Rp " + formatRupiah(change).trim();
-                    processBtn.disabled = false;
-                    processBtn.classList.remove("opacity-50");
-                } else {
-                    changeDisplay.innerText = "Rp 0";
-                    processBtn.disabled = true;
-                    processBtn.classList.add("opacity-50");
+                if (amount >= totalBill) {
+                    document.getElementById("payment-form").submit();
                 }
             }
+        });
 
-            function appendDigit(digit) {
-                if (currentInput === "0") currentInput = digit.toString();
-                else currentInput += digit.toString();
-                updateUI();
-            }
+        function popDigit() {
+            currentInput = currentInput.slice(0, -1);
+            if (currentInput === "") currentInput = "0";
+            updateUI();
+        }
 
-            function clearInput() {
-                currentInput = "0";
-                updateUI();
-            }
+        function setAmount(amount) {
+            currentInput = amount.toString();
+            updateUI();
+        }
 
-            function popDigit() {
-                currentInput = currentInput.slice(0, -1);
-                if (currentInput === "") currentInput = "0";
-                updateUI();
-            }
-
-            function setAmount(amount) {
-                currentInput = amount.toString();
-                updateUI();
-            }
-
-            function selectMethod(el) {
-                document.querySelectorAll(".payment-method").forEach((item) => {
-                    item.classList.remove("active");
-                });
-                el.classList.add("active");
-            }
-
-            window.onload = () => {
-                selectMethod(document.querySelector(".payment-method"));
-                updateUI();
-            };
-
-            document.getElementById("process-btn").addEventListener("click", function () {
-                const amount = parseInt(currentInput) || 0;
-                if (amount < totalBill) {
-                    alert("Jumlah pembayaran kurang dari total tagihan.");
-                    return;
-                }
-
-                this.innerHTML = `<div class="spinner-border spinner-border-sm me-2" role="status"></div> Memproses...`;
-                this.disabled = true;
-
-                setTimeout(() => {
-                    this.innerHTML = `<span class="material-symbols-outlined me-1">check_circle</span> Berhasil!`;
-                    this.classList.replace("btn-light", "btn-success");
-                    this.classList.add("text-white");
-
-                    alert("Pembayaran Berhasil! Struk sedang dicetak.");
-                    location.reload();
-                }, 1500);
+        function selectMethod(el, methodName) {
+            document.querySelectorAll(".payment-method").forEach((item) => {
+                item.classList.remove("active");
             });
-        </script>
+            el.classList.add("active");
+
+            // Simpan metode pilihan ke input hidden form
+            hiddenMetodePembayaran.value = methodName;
+            autoSetAmountForCashless();
+        }
+
+        window.onload = () => {
+            selectMethod(document.querySelector(".payment-method"), 'Tunai');
+            updateUI();
+        };
+
+        // Event Handling Submit Form Asli
+        document.getElementById("payment-form").addEventListener("submit", function (e) {
+            const amount = parseInt(currentInput) || 0;
+            if (amount < totalBill) {
+                e.preventDefault(); // Gagalkan kirim data jika kurang uang
+                alert("Jumlah pembayaran kurang dari total tagihan.");
+                return;
+            }
+
+            const btn = document.getElementById("process-btn");
+            btn.innerHTML = `<div class="spinner-border spinner-border-sm me-2" role="status"></div> Menyimpan Transaksi...`;
+            btn.disabled = true;
+        });
+    </script>
 @endsection

@@ -3,7 +3,7 @@
   <main>
       <div class="container mt-3 mb-3">
         <div class="row g-4 mb-4">
-          <div class="col-12 col-md-6 col-lg-3">
+          <div class="col-12 col-md-6 col-lg-4">
             <div class="bg-surface-container-lowest p-4 rounded-4 custom-shadow border border-white-40">
               <div class="d-flex justify-content-between align-items-start mb-3">
                 <div class="p-3 bg-primary-5 rounded-3 text-primary-custom">
@@ -11,11 +11,12 @@
                 </div>
               </div>
               <p class="text-on-surface-variant text-label-md fw-bold text-uppercase tracking-wider mb-0">Total Products</p>
-              <h3 class="font-headline-lg text-on-surface mt-1 mb-0">1284</h3>
+              <h3 class="font-headline-lg text-on-surface mt-1 mb-0">
+                {{ $totalProducts }}       </h3>
 
             </div>
           </div>
-          <div class="col-12 col-md-6 col-lg-3">
+          <div class="col-12 col-md-6 col-lg-4">
             <div class="bg-surface-container-lowest p-4 rounded-4 custom-shadow border border-white-40">
               <div class="d-flex justify-content-between align-items-start mb-3">
                 <div class="p-3 bg-secondary-5 rounded-3 text-secondary-custom">
@@ -23,10 +24,10 @@
                 </div>
               </div>
               <p class="text-on-surface-variant text-label-md fw-bold text-uppercase tracking-wider mb-0">Total Customers</p>
-              <h3 class="font-headline-lg text-on-surface mt-1 mb-0">8,432</h3>
-            </div>
+              <h3 class="font-headline-lg text-on-surface mt-1 mb-0">
+                {{ $totalCustomers }}       </h3>            </div>
           </div>
-          <div class="col-12 col-md-6 col-lg-3">
+          <div class="col-12 col-md-6 col-lg-4">
             <div class="bg-surface-container-lowest p-4 rounded-4 custom-shadow border border-white-40">
               <div class="d-flex justify-content-between align-items-start mb-3">
                 <div class="p-3 bg-tertiary-5 rounded-3 text-tertiary-custom">
@@ -34,187 +35,52 @@
                 </div>
               </div>
               <p class="text-on-surface-variant text-label-md fw-bold text-uppercase tracking-wider mb-0">Transactions</p>
-              <h3 class="font-headline-lg text-on-surface mt-1 mb-0">42,910</h3>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="bg-primary-custom text-on-primary p-4 rounded-4 custom-shadow position-relative overflow-hidden">
-              <div class="position-relative z-1">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                  <div class="p-3 bg-white-20 rounded-3 backdrop-blur">
-                    <i class="ti ti-cash"></i>
-                  </div>
-                </div>
-                <p class="text-white-70 text-label-md fw-bold text-uppercase tracking-wider mb-0">Daily Revenue</p>
-                <h3 class="font-headline-lg mt-1 mb-0">$12,450.00</h3>
-              </div>
-              <div class="position-absolute decoration-circle"></div>
-            </div>
+              <h3 class="font-headline-lg text-on-surface mt-1 mb-0">
+                {{ $totalTransactions }}       </h3>            </div>
           </div>
         </div>
-
-        <div class="row g-4 mb-4">
-          <div class="col-12">
-            <div class="bg-surface-container-lowest p-4 p-md-5 rounded-4 custom-shadow border border-white-40">
-              <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                  <h4 class="font-headline-md text-on-surface mb-1">Monthly Sales Performance</h4>
-                </div>
-              </div>
-
-              <div class="chart-container d-flex align-items-end justify-content-between px-2 position-relative">
-                <div class="position-absolute inset-0 d-flex flex-column justify-content-between pe-none z-0">
-                  <div class="border-bottom-outline w-100"></div>
-                  <div class="border-bottom-outline w-100"></div>
-                  <div class="border-bottom-outline w-100"></div>
-                  <div class="border-bottom-outline w-100"></div>
-                </div>
-
-                @php
-                  $currentMonthNumber = date('n'); 
-                @endphp
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 1 ? 'active' : '' }}"
-                  style="height: 60%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 1 ? 'active' : '' }}">
-                    $14k</div>
-                </div>
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 2 ? 'active' : '' }}"
-                  style="height: 45%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 2 ? 'active' : '' }}">
-                    $11k</div>
-                </div>
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 3 ? 'active' : '' }}"
-                  style="height: 85%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 3 ? 'active' : '' }}">
-                    $19k</div>
-                </div>
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 4 ? 'active' : '' }}"
-                  style="height: 70%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 4 ? 'active' : '' }}">
-                    $16k</div>
-                </div>
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 5 ? 'active' : '' }}"
-                  style="height: 50%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 5 ? 'active' : '' }}">
-                    $12k</div>
-                </div>
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 6 ? 'active' : '' }}"
-                  style="height: 95%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 6 ? 'active' : '' }}">
-                    $22k</div>
-                </div>
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 7 ? 'active' : '' }}"
-                  style="height: 75%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 7 ? 'active' : '' }}">
-                    $15k</div>
-                </div>
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 8 ? 'active' : '' }}"
-                  style="height: 40%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 8 ? 'active' : '' }}">
-                    $10k</div>
-                </div>
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 9 ? 'active' : '' }}"
-                  style="height: 60%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 9 ? 'active' : '' }}">
-                    $14k</div>
-                </div>
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 10 ? 'active' : '' }}"
-                  style="height: 80%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 10 ? 'active' : '' }}">
-                    $18k</div>
-                </div>
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 11 ? 'active' : '' }}"
-                  style="height: 55%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 11 ? 'active' : '' }}">
-                    $13k</div>
-                </div>
-
-                <div class="chart-bar position-relative flex-grow-1 rounded-top {{ $currentMonthNumber == 12 ? 'active' : '' }}"
-                  style="height: 90%">
-                  <div
-                    class="chart-tooltip position-absolute bg-on-surface text-white rounded py-1 px-2 {{ $currentMonthNumber == 12 ? 'active' : '' }}">
-                    $21.4k</div>
-                </div>
-              </div>
-
-              <div
-                class="d-flex justify-content-between mt-3 fs-10 fw-bold text-on-surface-variant text-uppercase tracking-tighter">
-                <span class="{{ $currentMonthNumber == 1 ? 'text-primary-custom fw-black fs-11' : '' }}">Jan</span>
-                <span class="{{ $currentMonthNumber == 2 ? 'text-primary-custom fw-black fs-11' : '' }}">Feb</span>
-                <span class="{{ $currentMonthNumber == 3 ? 'text-primary-custom fw-black fs-11' : '' }}">Mar</span>
-                <span class="{{ $currentMonthNumber == 4 ? 'text-primary-custom fw-black fs-11' : '' }}">Apr</span>
-                <span class="{{ $currentMonthNumber == 5 ? 'text-primary-custom fw-black fs-11' : '' }}">May</span>
-                <span class="{{ $currentMonthNumber == 6 ? 'text-primary-custom fw-black fs-11' : '' }}">Jun</span>
-                <span class="{{ $currentMonthNumber == 7 ? 'text-primary-custom fw-black fs-11' : '' }}">Jul</span>
-                <span class="{{ $currentMonthNumber == 8 ? 'text-primary-custom fw-black fs-11' : '' }}">Aug</span>
-                <span class="{{ $currentMonthNumber == 9 ? 'text-primary-custom fw-black fs-11' : '' }}">Sep</span>
-                <span class="{{ $currentMonthNumber == 10 ? 'text-primary-custom fw-black fs-11' : '' }}">Oct</span>
-                <span class="{{ $currentMonthNumber == 11 ? 'text-primary-custom fw-black fs-11' : '' }}">Nov</span>
-                <span class="{{ $currentMonthNumber == 12 ? 'text-primary-custom fw-black fs-11' : '' }}">Dec</span>
-              </div>
-            </div>
-          </div>  </div>
 
         <section class="bg-surface-container-lowest rounded-4 custom-shadow border border-white-40 overflow-hidden">
           <div class="px-4 py-4 px-md-5 border-bottom flex-between-center">
             <div>
-              <h4 class="font-headline-md text-on-surface mb-1">Recent Transactions</h4>
-              <p class="text-body-md text-on-surface-variant mb-0">Detailed log of the last 10 activities</p>
+              <h4 class="font-headline-md text-on-surface mb-1">History</h4>
             </div>
           </div>
           <div class="table-responsive">
             <table class="table table-custom align-middle">
               <thead>
                 <tr>
-                  <th class="px-4 px-md-5 py-3">Customer</th>
-                  <th class="px-4 py-3">Product Ref</th>
-                  <th class="px-4 py-3">Date</th>
-                  <th class="px-4 py-3 text-end">Amount</th>
-                  <th class="px-4 py-3 text-center">Status</th>
+                  <th class="px-4 px-md-5 py-3">NO</th>
+                  <th class="px-4 py-3">Img</th>
+                  <th class="px-4 py-3">Harga</th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="table-row-hover">
-                  <td class="px-4 px-md-5 py-3">
-                    <div class="d-flex align-items-center gap-3">
-                      <div class="w-9 h-9 rounded-circle bg-primary-10 d-flex align-items-center justify-center text-primary-custom fw-bold fs-xs">JD</div>
-                      <div>
-                        <p class="text-body-md fw-bold text-on-surface mb-0">Jane Doe</p>
-                        <p class="fs-11 text-on-surface-variant mb-0">jane.doe@example.com</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-4 py-3 font-data-mono text-on-surface-variant">#SPD-2041-N</td>
-                  <td class="px-4 py-3 text-body-md text-on-surface">Oct 24, 2024</td>
-                  <td class="px-4 py-3 text-end font-data-mono fw-bold text-on-surface">$189.00</td>
-                  <td class="px-4 py-3 text-center">
-                    <span class="badge rounded-pill text-emerald bg-emerald-light font-badge-bold">Completed</span>
-                  </td>
-                </tr>
+                @forelse ($details as $detail)
+                  <tr class="table-row-hover">
+                    <td class="px-4 px-md-5 py-3">
+                      {{ $loop->iteration }}
+                    </td>
 
-              </tbody>
+                    <td class="px-4 py-3">
+                      @if ($detail->product && $detail->product->img)
+                        <img src="{{ asset($detail->product->img) }}" width="60" class="rounded">
+                      @else
+                        <img src="{{ asset('images/default-product.png') }}" width="60" class="rounded">
+                      @endif
+                    </td>
+
+                    <td class="px-4 py-3">
+                      Rp {{ number_format($detail->harga_satuan, 0, ',', '.') }}
+                    </td>
+                  </tr>
+                @empty
+                  <tr>
+                    <td colspan="3" class="text-center py-4">
+                      Data kosong
+                    </td>
+                  </tr>
+                @endforelse    </tbody>
             </table>
           </div>
         </section>

@@ -192,14 +192,11 @@
         {{-- Modal Add Category --}}
         <div class="modal fade" id="modalAddCategory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
           aria-labelledby="modalAddCategoryLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 650px;">
+          <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 450px;">
             <div class="modal-content border-0 modal-rounded shadow-lg overflow-hidden bg-surface-lowest">
 
               <div class="modal-header border-0 pt-4 px-4 pb-2 d-flex justify-content-between align-items-start">
                 <div class="d-flex align-items-center gap-3">
-                  <div class="icon-box bg-surface-container text-primary-custom">
-                    <i class="ti ti-apps fs-4"></i>
-                  </div>
                   <div>
                     <h5 class="modal-title headline-md text-on-surface mb-0" id="modalAddCategoryLabel">Tambah Kategori
                     </h5>
@@ -211,42 +208,18 @@
                   aria-label="Close"></button>
               </div>
 
-              <form action="#" method="POST" id="addCategoryForm" enctype="multipart/form-data">
+              <form action="{{ route('categories.store') }}" method="POST" id="addCategoryForm"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body px-4 py-3">
-                  <div class="row g-4">
-
-                    <div class="col-12 col-md-5 d-flex flex-column">
-                      <label class="text-label-caps mb-2">Ikon Kategori</label>
-                      <div
-                        class="dropzone-box border-dashed-custom rounded-3 d-flex flex-column align-items-center justify-content-center p-3 text-center position-relative flex-grow-1"
-                        style="min-height: 180px;">
-                        <input type="file" name="category_icon" id="categoryIconInput"
-                          class="position-absolute w-100 h-100 top-0 start-0 opacity-0 cursor-pointer"
-                          accept="image/jpeg,image/png,image/svg+xml">
-
-                        <div
-                          class="dropzone-preview d-none position-absolute w-100 h-100 top-0 start-0 p-2 bg-white rounded-3">
-                          <img src="#" alt="Preview" class="w-100 h-100 object-contain">
-                        </div>
-
-                        <div class="dropzone-default-content">
-                          <i class="ti ti-photo-plus text-on-surface-variant fs-1 opacity-50 mb-2 d-block"></i>
-                          <p class="text-on-surface-variant mb-0" style="font-size: 13px;">Unggah Foto atau Ikon</p>
-                        </div>
-                      </div>
-                      <span class="text-on-surface-variant opacity-75 mt-2" style="font-size: 11px;">JPG, PNG atau SVG.
-                        Maks 2MB.</span>
-                    </div>
-
-                    <div class="col-12 col-md-7 d-flex flex-column gap-3">
+                  <div class="row g-3">
+                    <div class="col-12 d-flex flex-column gap-3">
                       <div>
                         <label for="categoryName" class="text-label-caps mb-1 d-block">Nama Kategori</label>
                         <input type="text" id="categoryName" name="name" class="form-control-modal w-100"
-                          placeholder="Contoh: Sepatu Lari Pria" required>
+                          placeholder="Masukkan nama kategori..." required>
                       </div>
                     </div>
-
                   </div>
                 </div>
 
@@ -272,12 +245,79 @@
             class="btn bg-primary-container px-4 py-2 d-inline-flex align-items-center gap-2 fw-semibold border-0 shadow-level-1"
             data-bs-toggle="modal" data-bs-target="#modalAddCategory" style="height: 44px; border-radius: 8px;">
             <i class="ti ti-plus fs-3"></i>
-            Add Category
+            Category
           </button>
         </div>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
-          @foreach (range(1, 4) as $item)
+          @foreach ($categories as $category)
+
+            {{-- Modal Edit --}}
+            <div class="modal fade" id="editModal{{ $category->id }}" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered" style="max-width: 450px;">
+                <div class="modal-content border-0 modal-rounded shadow-lg bg-surface-lowest">
+                  <form action="{{ route('categories.update', $category->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header border-0 pt-4 px-4 pb-2">
+                      <h5 class="modal-title headline-md text-on-surface">Edit Category</h5>
+                      <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body px-4 py-2">
+                      <div class="mb-3">
+                        <label class="text-label-caps mb-1 d-block">Nama Category</label>
+                        <input type="text" name="name" class="form-control-modal w-100" value="{{ $category->name }}"
+                          required>
+                      </div>
+                    </div>
+                    <div class="modal-footer border-0 px-4 pb-4 pt-2 d-flex justify-content-end gap-2">
+                      <button type="button" class="btn text-secondary text-decoration-none fw-semibold border-0"
+                        data-bs-dismiss="modal" style="background:none;">Batal</button>
+                      <button type="submit" class="btn bg-primary-container fw-semibold px-4 py-2 border-0"
+                        style="border-radius: 8px;">Update</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            {{-- MODAL BARU: Konfirmasi Delete --}}
+            <div class="modal fade" id="deleteModal{{ $category->id }}" tabindex="-1" data-bs-backdrop="static">
+              <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+                <div class="modal-content border-0 modal-rounded shadow-lg bg-surface-lowest">
+                  <div class="modal-header border-0 pt-4 px-4 pb-0 d-flex justify-content-between align-items-start">
+                    <div class="d-flex align-items-center gap-2 text-danger">
+                      <i class="ti ti-alert-triangle fs-2"></i>
+                      <h5 class="modal-title headline-md m-0" style="color: #ba1a1a;">Hapus Kategori?</h5>
+                    </div>
+                    <button type="button" class="btn-close shadow-none m-0 p-2" data-bs-dismiss="modal"
+                      aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body px-4 py-3">
+                    <p class="m-0 text-on-surface-variant" style="font-size: 14px; line-height: 22px;">
+                      Apakah Anda yakin ingin menghapus kategori <strong>"{{ $category->name }}"</strong>? Tindakan ini
+                      tidak dapat dibatalkan.
+                    </p>
+                  </div>
+                  <div class="modal-footer border-0 px-4 pb-4 pt-2 d-flex justify-content-end gap-2">
+                    <button type="button" class="btn text-dark fw-semibold border-0 p-2" data-bs-dismiss="modal"
+                      style="background: none;">Batal</button>
+
+                    {{-- Form submit dipindah ke dalam tombol konfirmasi modal --}}
+                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="m-0">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger fw-semibold px-4 py-2 border-0 shadow-sm"
+                        style="background-color: #ba1a1a; border-radius: 8px;">
+                        Hapus Data
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {{-- Grid Item Card Kategori --}}
             <div class="col">
               <div class="card h-100 p-4 rounded-3 bg-surface-lowest shadow-level-1 category-card">
                 <div class="d-flex justify-content-between align-items-start mb-4">
@@ -285,14 +325,20 @@
                     <i class="ti ti-shoe"></i>
                   </div>
                   <div class="d-flex gap-1">
-                    <button class="btn-action-card">
-                      <i class="ti ti-pencil"></i> </button>
-                    <button class="btn-action-card delete-btn">
-                      <i class="ti ti-trash"></i> </button>
+                    {{-- Tombol Edit --}}
+                    <button class="btn-action-card" data-bs-toggle="modal" data-bs-target="#editModal{{ $category->id }}">
+                      <i class="ti ti-pencil"></i>
+                    </button>
+
+                    {{-- Tombol Hapus: Sekarang memicu Modal Konfirmasi --}}
+                    <button type="button" class="btn-action-card delete-btn" data-bs-toggle="modal"
+                      data-bs-target="#deleteModal{{ $category->id }}">
+                      <i class="ti ti-trash"></i>
+                    </button>
                   </div>
                 </div>
                 <div class="mt-auto">
-                  <h3 class="headline-md mb-1">Sneakers</h3>
+                  <h3 class="headline-md mb-1">{{ $category->name }}</h3>
                 </div>
               </div>
             </div>
